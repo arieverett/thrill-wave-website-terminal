@@ -2297,7 +2297,7 @@ async function runWelcomeTyping() {
     if (welcomeTypingAborted) return;
     l3.appendChild(cursor);
     await new Promise(r => setTimeout(r, 160));
-    await typeOut(l3.querySelector('.line-text'), '> (sound on and silent off)', 38);
+    await typeOut(l3.querySelector('.line-text'), '> (turn sound on and silent mode off)', 38);
     if (welcomeTypingAborted) return;
   }
 

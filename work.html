@@ -811,6 +811,7 @@
   }
 }
 
+
 </style>
 </head>
 <body>
@@ -3559,5 +3560,17 @@
 })();
 </script>
 <script src="prompt-rail.js" defer></script>
+<style>
+/* 04A list: same text size as the rest of the site's terminal copy (it inherits the page's size instead of
+   its own smaller/larger clamp). Very narrow phones drop to one column so nothing gets cut off. */
+html body #terminal-body #selected .work-archive-grid,
+html body #selected .work-archive-grid { font-size: inherit !important; }
+html body #terminal-body #selected .work-archive-grid .cascade-toggle,
+html body #selected .work-archive-grid .cascade-toggle { font-size: inherit !important; letter-spacing: 0 !important; }
+@media (max-width: 360px) {
+  html body #terminal-body #selected .work-archive-grid,
+  #selected .work-archive-grid { grid-template-columns: minmax(0, 1fr) !important; }
+}
+</style>
 </body>
 </html>

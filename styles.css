@@ -12001,3 +12001,8 @@ body.page-index #hero {
     white-space: pre-wrap !important;
   }
 }
+
+/* Sitrep 03B/03C/03D: each step's tile sits where that step falls in the 03A triptych:
+   ingest on the left, synthesize in the middle, execute on the right. */
+html body #process .single-tile { margin-left: auto !important; margin-right: auto !important; }
+html body #output .single-tile { margin-left: auto !important; margin-right: 0 !important; }
