@@ -2783,10 +2783,17 @@ document.getElementById('skip-btn').addEventListener('click', skipSequence);
     const myGen = window.twTypingGen || 0; // read current gen, never mutate
     let html = '';
     let idx = 0;
+    // Rewrite the typed text without wiping the phone ">" rail (prompt-rail.js) that sits in the same box.
+    // Replacing it on every keystroke made the whole ">" column blink while the intro typed.
+    function render(markup) {
+      const rail = targetEl.querySelector(':scope > .tw-prompt-rail');
+      targetEl.innerHTML = markup;
+      if (rail) targetEl.insertBefore(rail, targetEl.firstChild);
+    }
     function next() {
       if ((window.twTypingGen || 0) !== myGen) return; // aborted by reset
       if (idx >= lines.length) {
-        targetEl.innerHTML = html + '<span class="cursor"></span>';
+        render(html + '<span class="cursor"></span>');
         if (done) done();
         return;
       }
@@ -2804,7 +2811,7 @@ document.getElementById('skip-btn').addEventListener('click', skipSequence);
         if (j < line.t.length) {
           const c = line.t[j];
           html += escHtml(c);
-          targetEl.innerHTML = html + '<span class="cursor"></span>';
+          render(html + '<span class="cursor"></span>');
           // typing click per keystroke (skip whitespace)
           if (c !== ' ' && c !== '\n' && typeof window.twTypeClick === 'function') {
             window.twTypeClick();
