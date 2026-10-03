@@ -26,7 +26,7 @@
     <div class="frame">
       <div class="frame-label tl">thrill_wave</div>
       <div class="frame-label bl" id="clock">00:00:00</div>
-      <div class="frame-label br">07 / content_defense</div>
+      <div class="frame-label br">07 / story_defense</div>
     </div>
     <main class="wrap">
       <div class="shell">
@@ -39,7 +39,7 @@
         </div>
         <section class="terminal">
           <div class="terminal-bar">
-            <div class="title">content_defense.exe</div>
+            <div class="title">story_defense.exe</div>
             <div class="dots">
               <div class="dot"></div>
               <div class="dot"></div>
@@ -54,7 +54,7 @@
               <div class="phosphor"></div>
               <div class="screen" id="startScr">
                 <div class="psx-box">
-                  <div class="psx-eyebrow">— THRILL WAVE ARCADE —</div>
+                  <div class="psx-eyebrow">[ THRILL WAVE ARCADE ]</div>
                   <div class="psx-title">
                     STORY<br /><span class="hl">DEFENSE</span>
                   </div>
@@ -79,7 +79,7 @@
               </div>
               <div class="screen hidden" id="endScr">
                 <div class="psx-box">
-                  <div class="psx-eyebrow" id="endEye">— RESULT —</div>
+                  <div class="psx-eyebrow" id="endEye">[ RESULT ]</div>
                   <div class="psx-title" id="endTitle">
                     RUN<br /><span class="hl">COMPLETE</span>
                   </div>
@@ -762,8 +762,8 @@
           localStorage.setItem(location.pathname + "_high", high);
         }
         document.getElementById("endEye").textContent = win
-          ? "— MISSION CLEAR —"
-          : "— GAME OVER —";
+          ? "[ MISSION CLEAR ]"
+          : "[ GAME OVER ]";
         document.getElementById("endTitle").innerHTML = title;
         document.getElementById("endSub").textContent =
           sub + "  score " + pad(score);
@@ -1222,7 +1222,7 @@
         drawSky(timer * 60);
         let _ct = Math.max(0, 58 - timer);
         hud(
-          "CONTENT_DEFENSE.EXE",
+          "STORY_DEFENSE.EXE",
           "WAVE " +
             Math.min(wave, 5) +
             "/5" +
