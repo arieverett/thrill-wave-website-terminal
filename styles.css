@@ -12065,7 +12065,7 @@ html body #output .single-tile { margin-left: auto !important; margin-right: 0 !
   box-sizing: border-box !important;
 }
 #tw-breakroom .tw-breakroom-score-panel.is-open { display: flex !important; }
-#tw-breakroom .tw-breakroom-score-panel:has(.tw-name-form) { align-items: flex-start !important; padding-top: 4px !important; }
+#tw-breakroom .tw-breakroom-score-panel:has(.tw-name-form) { align-items: flex-start !important; padding-top: 18px !important; }
 #tw-breakroom .tw-breakroom-score-card {
   width: min(520px, 100%) !important;
   max-height: 100% !important;
@@ -12101,18 +12101,29 @@ html body #output .single-tile { margin-left: auto !important; margin-right: 0 !
   position: absolute !important;
   left: 50% !important;
   top: 50% !important;
-  width: 14px !important;
-  height: 14px !important;
-  margin: -7px 0 0 -7px !important;
+  width: 11px !important;
+  height: 11px !important;
+  margin: -5.5px 0 0 -5.5px !important;
   border-radius: 50% !important;
   background: #ff5f56 !important;
-  box-shadow: 0 0 5px rgba(255,95,86,0.6) !important;
-  transition: transform 150ms ease, box-shadow 150ms ease !important;
+  box-shadow: none !important;
+  transform: none !important;
+  transition: background-color 150ms ease, box-shadow 150ms ease, transform 150ms ease !important;
+  animation: twTrafficPulseRed 2.85s infinite !important;
 }
 #tw-breakroom .tw-score-head button[data-score-close]:hover::before,
-#tw-breakroom .tw-score-head button[data-score-close]:focus-visible::before {
-  transform: scale(1.15) !important;
-  box-shadow: 0 0 6px rgba(255,95,86,0.8), 0 0 14px rgba(255,95,86,0.35) !important;
+#tw-breakroom .tw-score-head button[data-score-close]:focus-visible::before,
+#tw-breakroom .tw-score-head button[data-score-close]:active::before {
+  transform: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+#tw-breakroom .tw-score-head button[data-score-close],
+#tw-breakroom .tw-score-head button[data-score-close]:hover,
+#tw-breakroom .tw-score-head button[data-score-close]:focus-visible {
+  outline: 0 !important;
+  box-shadow: none !important;
+  -webkit-tap-highlight-color: transparent !important;
 }
 @media (max-width: 820px) {
   #tw-breakroom .tw-breakroom-score-panel { inset: 46px 12px 0 !important; }
