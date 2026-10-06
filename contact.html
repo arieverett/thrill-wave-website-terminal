@@ -4,6 +4,11 @@
 <html lang="en">
 <head>
 <script>
+/* iPhone/iPad: "ambient" audio follows the silent switch for every sound on the page
+   (music, clicks, games), and never interrupts other apps. Safari 16.4+. */
+try { if (navigator.audioSession) navigator.audioSession.type = 'ambient'; } catch (e) {}
+</script>
+<script>
 // ============================================================
 // TW BREAK ROOM HARD CONTROLLER
 // Runs before the older page handlers, so game tiles + exit own

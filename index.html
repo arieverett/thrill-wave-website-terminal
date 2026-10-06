@@ -4,6 +4,11 @@
 <html lang="en">
 <head>
 <script>
+/* iPhone/iPad: "ambient" audio follows the silent switch for every sound on the page
+   (music, clicks, games), and never interrupts other apps. Safari 16.4+. */
+try { if (navigator.audioSession) navigator.audioSession.type = 'ambient'; } catch (e) {}
+</script>
+<script>
 // ============================================================
 // TW BREAK ROOM HARD CONTROLLER
 // Runs before the older page handlers, so game tiles + exit own
@@ -946,21 +951,21 @@
 <span class="line" data-breakroom-line="&gt; Take a load off. Choose a game:">&gt; Take a load off. Choose a game:</span>
 </div>
 <div class="tw-breakroom-grid" aria-label="secret break room games">
-<button class="tw-breakroom-card" type="button" data-game-src="games/one_shot.html?embed=1&amp;v=20261006d" onclick="return window.twBreakRoomLaunch ? window.twBreakRoomLaunch(this,event) : false;">
+<button class="tw-breakroom-card" type="button" data-game-src="games/one_shot.html?embed=1&amp;v=20261006e" onclick="return window.twBreakRoomLaunch ? window.twBreakRoomLaunch(this,event) : false;">
 <span class="tw-breakroom-card__sprite" aria-hidden="true">📷</span>
 <span class="tw-breakroom-card__num">[01]</span>
 <span class="tw-breakroom-card__title">one shot</span>
 <span class="tw-breakroom-card__copy">jump the plant hazards and clear the shot.</span>
 <span class="tw-breakroom-card__launch">&gt; launch</span>
 </button>
-<button class="tw-breakroom-card" type="button" data-game-src="games/going_viral.html?embed=1&amp;v=20261006d" onclick="return window.twBreakRoomLaunch ? window.twBreakRoomLaunch(this,event) : false;">
+<button class="tw-breakroom-card" type="button" data-game-src="games/going_viral.html?embed=1&amp;v=20261006e" onclick="return window.twBreakRoomLaunch ? window.twBreakRoomLaunch(this,event) : false;">
 <span class="tw-breakroom-card__sprite" aria-hidden="true">⚔️</span>
 <span class="tw-breakroom-card__num">[02]</span>
 <span class="tw-breakroom-card__title">going viral</span>
 <span class="tw-breakroom-card__copy">outrun the algorithm before it outruns you.</span>
 <span class="tw-breakroom-card__launch">&gt; launch</span>
 </button>
-<button class="tw-breakroom-card" type="button" data-game-src="games/content_defense.html?embed=1&amp;v=20261006d" onclick="return window.twBreakRoomLaunch ? window.twBreakRoomLaunch(this,event) : false;">
+<button class="tw-breakroom-card" type="button" data-game-src="games/content_defense.html?embed=1&amp;v=20261006e" onclick="return window.twBreakRoomLaunch ? window.twBreakRoomLaunch(this,event) : false;">
 <span class="tw-breakroom-card__sprite" aria-hidden="true">🛡️</span>
 <span class="tw-breakroom-card__num">[03]</span>
 <span class="tw-breakroom-card__title">story defense</span>
@@ -1331,6 +1336,11 @@ async function initAudio() {
   // Tone.js loads in the background (async) so it never blocks the page; wait for it here.
   if (typeof Tone === 'undefined' && window.__toneReady) {
     await Promise.race([window.__toneReady, new Promise(function(r){ setTimeout(r, 2500); })]);
+  }
+  // Use the context unlocked during the start tap, if Tone.js arrived after it.
+  if (window.__twUnlockedCtx && typeof Tone !== 'undefined' && typeof Tone.setContext === 'function') {
+    try { Tone.setContext(window.__twUnlockedCtx); } catch (e) {}
+    window.__twUnlockedCtx = null;
   }
   if (typeof Tone === 'undefined') {
     console.warn('Tone.js not loaded; running silent');
@@ -2315,6 +2325,21 @@ async function runWelcomeTyping() {
 
 // typing is kicked off below, after sessionStorage check
 
+function twUnlockAudioInGesture() {
+  try {
+    if (typeof Tone !== 'undefined') { Tone.start().catch(function(){}); return; }
+    if (window.__twUnlockedCtx) return;
+    var C = window.AudioContext || window.webkitAudioContext;
+    if (!C) return;
+    var ctx = new C();
+    window.__twUnlockedCtx = ctx;
+    if (ctx.resume) ctx.resume().catch(function(){});
+    // A one-sample silent blip finishes the unlock on older iPhones.
+    var buf = ctx.createBuffer(1, 1, 22050), src = ctx.createBufferSource();
+    src.buffer = buf; src.connect(ctx.destination); src.start(0);
+  } catch (e) {}
+}
+
 async function startEverything() {
   welcomeTypingAborted = true;
   document.getElementById('boot-root')?.classList.add('boot-running');
@@ -2324,8 +2349,11 @@ async function startEverything() {
   // through the visualizer/audio graph and make the song feel like it starts twice.
   // Background music becomes audible only at the animated thrill_wave.elf click,
   // matching the desktop sequence.
-  try { await initAudio(); } catch (e) { console.warn('audio init failed:', e); }
+  // Unlock sound inside this tap, before anything waits. If Tone.js is still downloading,
+  // a plain AudioContext is unlocked now and handed to Tone in initAudio().
+  twUnlockAudioInGesture();
   primeMusicForIOS();
+  try { await initAudio(); } catch (e) { console.warn('audio init failed:', e); }
 
   // Sound stack — fired in the user's click gesture so the audio unlocks
   // immediately. The click pop sells "I just pressed the button"; the
