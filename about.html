@@ -267,7 +267,7 @@ try { if (navigator.audioSession) navigator.audioSession.type = 'ambient'; } cat
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
-<link href="styles.css?v=20261006d" rel="stylesheet"/>
+<link href="styles.css?v=20261006e" rel="stylesheet"/>
 <script type="application/ld+json">
 [
   {
@@ -712,21 +712,21 @@ try { if (navigator.audioSession) navigator.audioSession.type = 'ambient'; } cat
 <span class="line" data-breakroom-line="&gt; Take a load off. Choose a game:">&gt; Take a load off. Choose a game:</span>
 </div>
 <div class="tw-breakroom-grid" aria-label="secret break room games">
-<button class="tw-breakroom-card" type="button" data-game-src="games/one_shot.html?embed=1" onclick="return window.twBreakRoomLaunch ? window.twBreakRoomLaunch(this,event) : false;">
+<button class="tw-breakroom-card" type="button" data-game-src="games/one_shot.html?embed=1&amp;v=20261006f" onclick="return window.twBreakRoomLaunch ? window.twBreakRoomLaunch(this,event) : false;">
 <span class="tw-breakroom-card__sprite" aria-hidden="true">📷</span>
 <span class="tw-breakroom-card__num">[01]</span>
 <span class="tw-breakroom-card__title">one shot</span>
 <span class="tw-breakroom-card__copy">jump the plant hazards and clear the shot.</span>
 <span class="tw-breakroom-card__launch">&gt; launch</span>
 </button>
-<button class="tw-breakroom-card" type="button" data-game-src="games/going_viral.html?embed=1" onclick="return window.twBreakRoomLaunch ? window.twBreakRoomLaunch(this,event) : false;">
+<button class="tw-breakroom-card" type="button" data-game-src="games/going_viral.html?embed=1&amp;v=20261006f" onclick="return window.twBreakRoomLaunch ? window.twBreakRoomLaunch(this,event) : false;">
 <span class="tw-breakroom-card__sprite" aria-hidden="true">⚔️</span>
 <span class="tw-breakroom-card__num">[02]</span>
 <span class="tw-breakroom-card__title">going viral</span>
 <span class="tw-breakroom-card__copy">outrun the algorithm before it outruns you.</span>
 <span class="tw-breakroom-card__launch">&gt; launch</span>
 </button>
-<button class="tw-breakroom-card" type="button" data-game-src="games/content_defense.html?embed=1" onclick="return window.twBreakRoomLaunch ? window.twBreakRoomLaunch(this,event) : false;">
+<button class="tw-breakroom-card" type="button" data-game-src="games/content_defense.html?embed=1&amp;v=20261006f" onclick="return window.twBreakRoomLaunch ? window.twBreakRoomLaunch(this,event) : false;">
 <span class="tw-breakroom-card__sprite" aria-hidden="true">🛡️</span>
 <span class="tw-breakroom-card__num">[03]</span>
 <span class="tw-breakroom-card__title">story defense</span>
@@ -2966,6 +2966,22 @@ try { if (navigator.audioSession) navigator.audioSession.type = 'ambient'; } cat
     try { localStorage.setItem(scoreKey(game), JSON.stringify(rows.slice(0, 10))); } catch(e) {}
   }
 
+  // Pulls the shared leaderboard (functions/api/scores.js) into the local cache, then redraws if the panel is still showing that game.
+  function refreshScores(game){
+    game = game || currentGameKey();
+    if (!window.fetch) return;
+    fetch('/api/scores?game=' + encodeURIComponent(game) + '&limit=10', { cache:'no-store' })
+      .then(function(r){ if (!r.ok) throw new Error('scores ' + r.status); return r.json(); })
+      .then(function(d){
+        if (!Array.isArray(d)) return;
+        writeScores(game, d.map(function(x){
+          return { name:String(x.player || '???').toLowerCase(), score:Number(x.score) || 0, date:x.date ? String(x.date).replace(' ', 'T') + 'Z' : '' };
+        }));
+        if (panelMode === 'scores' && currentGameKey() === game) renderScores(game);
+      })
+      .catch(function(){});
+  }
+
   function saveScore(game, rawScore, win){
     game = game || currentGameKey();
     var score = Math.max(0, Math.floor(Number(rawScore) || 0));
@@ -3035,14 +3051,13 @@ try { if (navigator.audioSession) navigator.audioSession.type = 'ambient'; } cat
       html += '<div class="tw-score-empty">no scores yet. play a round and claim the board.</div>';
     } else {
       html += '<div class="tw-score-table" role="table" aria-label="all time high scores">';
-      html += '<div class="tw-score-row tw-score-row--head" role="row"><span>#</span><span>name</span><span>score</span><span>date</span></div>';
+      html += '<div class="tw-score-row tw-score-row--head" role="row"><span>#</span><span>name</span><span>score</span></div>';
       rows.forEach(function(r, i){
         var isFresh = freshEntry && r.score === freshEntry.score && r.name === freshEntry.name && r.date === freshEntry.date;
         html += '<div class="tw-score-row' + (isFresh ? ' is-new' : '') + '" role="row">';
         html += '<span>' + String(i+1).padStart(2,'0') + '</span>';
         html += '<span>' + escapeHtml(r.name) + '</span>';
         html += '<span>' + String(r.score).padStart(5,'0') + '</span>';
-        html += '<span>' + escapeHtml(formatDate(r.date)) + '</span>';
         html += '</div>';
       });
       html += '</div>';
@@ -3114,6 +3129,7 @@ try { if (navigator.audioSession) navigator.audioSession.type = 'ambient'; } cat
       if (scoreBtn) {
         e.preventDefault(); e.stopPropagation();
         renderScores(currentGameKey());
+        refreshScores(currentGameKey());
         return;
       }
       var closeBtn = e.target && e.target.closest ? e.target.closest('[data-score-close]') : null;
