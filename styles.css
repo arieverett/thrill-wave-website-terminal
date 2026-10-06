@@ -12006,3 +12006,59 @@ body.page-index #hero {
    ingest on the left, synthesize in the middle, execute on the right. */
 html body #process .single-tile { margin-left: auto !important; margin-right: auto !important; }
 html body #output .single-tile { margin-left: auto !important; margin-right: 0 !important; }
+
+
+/* ============================================================
+   TW Oct 2026: crisp arcade menus (no glow) and the name / high scores
+   bar sits under the game screen instead of above it.
+   ============================================================ */
+#tw-breakroom .tw-breakroom-game-action,
+#tw-breakroom .tw-breakroom-score-card,
+#tw-breakroom .tw-breakroom-score-card *,
+#tw-breakroom .tw-score-row.is-new,
+#tw-breakroom .tw-score-head button[data-score-close] {
+  text-shadow: none !important;
+  filter: none !important;
+}
+#tw-breakroom .tw-breakroom-game-action {
+  color: #f5f5f5 !important;
+}
+#tw-breakroom .tw-breakroom-game-action:hover,
+#tw-breakroom .tw-breakroom-game-action:focus-visible {
+  color: var(--accent) !important;
+}
+#tw-breakroom .tw-score-head,
+#tw-breakroom .tw-score-head span,
+#tw-breakroom .tw-score-row {
+  color: #f5f5f5 !important;
+}
+#tw-breakroom .tw-score-sub,
+#tw-breakroom .tw-name-label,
+#tw-breakroom .tw-score-row--head,
+#tw-breakroom .tw-score-row.is-new {
+  color: var(--accent) !important;
+}
+#tw-breakroom .tw-score-empty,
+#tw-breakroom .tw-name-rules {
+  color: rgba(245,245,245,.78) !important;
+}
+
+body.tw-breakroom-game-active #tw-breakroom .tw-breakroom-game-screen {
+  display: flex !important;
+  flex-direction: column !important;
+}
+body.tw-breakroom-game-active #tw-breakroom .tw-breakroom-game-placeholder {
+  order: 1 !important;
+  flex: 0 0 auto !important;
+}
+body.tw-breakroom-game-active #tw-breakroom .tw-breakroom-game-hud {
+  order: 2 !important;
+  flex: 0 0 auto !important;
+  margin: 8px 0 0 !important;
+}
+@media (max-width: 820px) {
+  body.tw-breakroom-game-active #tw-breakroom .tw-breakroom-game-hud { margin: 6px 0 0 !important; }
+}
+@media (max-width: 520px) {
+  body.tw-breakroom-game-active #tw-breakroom .tw-breakroom-game-hud { margin: 5px 0 0 !important; }
+}

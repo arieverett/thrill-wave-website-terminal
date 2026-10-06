@@ -91,7 +91,7 @@
                       style="
                         font-family: &quot;Press Start 2P&quot;, monospace;
                         font-size: 6px;
-                        color: #888;
+                        color: #f5f5f5;
                         margin: 0 0 6px 0;
                       "
                     >
@@ -161,7 +161,7 @@
                       style="
                         font-family: &quot;Press Start 2P&quot;, monospace;
                         font-size: 9px;
-                        color: #aaa;
+                        color: #f5f5f5;
                         line-height: 2.2;
                       "
                     ></div>
@@ -311,10 +311,10 @@
         wrap.style.display = "block";
         if (LB.url.includes("YOUR")) {
           el.innerHTML =
-            '<span style="color:#555">add supabase credentials to enable</span>';
+            '<span style="color:#d8d8d8">add supabase credentials to enable</span>';
           return;
         }
-        el.innerHTML = '<span style="color:#555">loading...</span>';
+        el.innerHTML = '<span style="color:#d8d8d8">loading...</span>';
         try {
           const r = await fetch(
             LB.url +
@@ -329,10 +329,10 @@
               ? d
                   .map(
                     (x, i) =>
-                      `<div style="display:flex;justify-content:space-between;padding:1px 0;color:${x.player === me ? "#5dd068" : "#aaa"}"><span>${i + 1}. ${(x.player || "???").slice(0, 20)}</span><span style="padding-left:8px">${String(x.score || 0).padStart(5, "0")}</span></div>`,
+                      `<div style="display:flex;justify-content:space-between;padding:1px 0;color:${x.player === me ? "#5dd068" : "#f5f5f5"}"><span>${i + 1}. ${(x.player || "???").slice(0, 20)}</span><span style="padding-left:8px">${String(x.score || 0).padStart(5, "0")}</span></div>`,
                   )
                   .join("")
-              : '<div style="color:#555">no scores yet</div>';
+              : '<div style="color:#d8d8d8">no scores yet</div>';
           try {
             if (Array.isArray(d) && d.length)
               localStorage.setItem(
@@ -348,7 +348,7 @@
           } catch (e) {}
         } catch (e) {
           el.innerHTML =
-            '<span style="color:#555">could not load scores</span>';
+            '<span style="color:#d8d8d8">could not load scores</span>';
         }
       }
       async function lbEnd(s) {
