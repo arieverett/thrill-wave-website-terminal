@@ -263,8 +263,7 @@
         } catch (e) {}
       }
       const LB = {
-        url: "https://jiimhxhyrpffkwnytxod.supabase.co",
-        key: "sb_publishable_PCGwzAG9SgY6ayg0pje63A_YwMr0ZJU",
+        url: "/api",
         game: "content_defense",
       };
       function lbName() {
@@ -282,13 +281,10 @@
       async function lbPost(s) {
         if (LB.url.includes("YOUR")) return;
         try {
-          await fetch(LB.url + "/rest/v1/scores", {
+          await fetch(LB.url + "/scores", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              apikey: LB.key,
-              Authorization: "Bearer " + LB.key,
-              Prefer: "return=minimal",
             },
             body: JSON.stringify({
               game: LB.game,
@@ -311,11 +307,10 @@
         try {
           const r = await fetch(
             LB.url +
-              "/rest/v1/scores?game=eq." +
-              LB.game +
-              "&order=score.desc&limit=10&select=player,score",
-            { headers: { apikey: LB.key, Authorization: "Bearer " + LB.key } },
+              "/scores?game=" + LB.game + "&limit=10",
+            { cache: "no-store" },
           );
+          if (!r.ok) throw new Error("scores " + r.status);
           const d = await r.json();
           const me = lbName();
           el.innerHTML =
@@ -335,7 +330,7 @@
                   d.map((x) => ({
                     name: x.player || "???",
                     score: x.score || 0,
-                    date: new Date().toISOString(),
+                    date: x.date ? x.date.replace(" ", "T") + "Z" : new Date().toISOString(),
                   })),
                 ),
               );
@@ -381,10 +376,8 @@
         try {
           const r = await fetch(
             LB.url +
-              "/rest/v1/scores?game=eq." +
-              LB.game +
-              "&order=score.desc&limit=10&select=player,score",
-            { headers: { apikey: LB.key, Authorization: "Bearer " + LB.key } },
+              "/scores?game=" + LB.game + "&limit=10",
+            { cache: "no-store" },
           );
           const d = await r.json();
           if (Array.isArray(d) && d.length)
@@ -394,7 +387,7 @@
                 d.map((x) => ({
                   name: x.player || "???",
                   score: x.score || 0,
-                  date: new Date().toISOString(),
+                  date: x.date ? x.date.replace(" ", "T") + "Z" : new Date().toISOString(),
                 })),
               ),
             );
