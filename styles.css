@@ -12105,15 +12105,21 @@ html body #output .single-tile { margin-left: auto !important; margin-right: 0 !
   height: 11px !important;
   margin: -5.5px 0 0 -5.5px !important;
   border-radius: 50% !important;
-  background: #ff5f56 !important;
+  background: var(--accent) !important;
   box-shadow: none !important;
   transform: none !important;
   transition: background-color 150ms ease, box-shadow 150ms ease, transform 150ms ease !important;
-  animation: twTrafficPulseRed 2.85s infinite !important;
+  animation: twTrafficPulseGreen 2.85s ease-in-out infinite !important;
 }
-#tw-breakroom .tw-score-head button[data-score-close]:hover::before,
-#tw-breakroom .tw-score-head button[data-score-close]:focus-visible::before,
+@media (hover: hover) {
+  #tw-breakroom .tw-score-head button[data-score-close]:hover::before {
+    background: #ff5f56 !important;
+    animation: twTrafficPulseRed 2.85s ease-in-out infinite !important;
+  }
+}
 #tw-breakroom .tw-score-head button[data-score-close]:active::before {
+  background: #ff5f56 !important;
+  animation: twTrafficPulseRed 2.85s ease-in-out infinite !important;
   transform: none !important;
   box-shadow: none !important;
   filter: none !important;
