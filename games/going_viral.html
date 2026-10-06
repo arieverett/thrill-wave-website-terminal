@@ -20,7 +20,7 @@
       href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="arcade.css?v=20261006c" />
+    <link rel="stylesheet" href="arcade.css?v=20261006d" />
   </head>
   <body>
     <div class="frame">
@@ -54,7 +54,7 @@
               <div class="phosphor"></div>
               <div class="screen" id="startScr">
                 <div class="psx-box">
-                  <div class="psx-eyebrow">[ ALGORITHM DUNGEON ]</div>
+                  <div class="psx-eyebrow">ALGORITHM DUNGEON</div>
                   <div class="psx-title">
                     GOING<br /><span class="hl">VIRAL</span>
                   </div>
@@ -81,7 +81,7 @@
               </div>
               <div class="screen hidden" id="endScr">
                 <div class="psx-box">
-                  <div class="psx-eyebrow" id="endEye">[ RESULT ]</div>
+                  <div class="psx-eyebrow" id="endEye">RESULT</div>
                   <div class="psx-title" id="endTitle">
                     RUN<br /><span class="hl">COMPLETE</span>
                   </div>
@@ -673,8 +673,8 @@
           localStorage.setItem(location.pathname + "_high", high);
         }
         document.getElementById("endEye").textContent = win
-          ? "[ VIRAL MOMENT ]"
-          : "[ FEED LOST ]";
+          ? "VIRAL MOMENT"
+          : "FEED LOST";
         document.getElementById("endTitle").innerHTML = win
           ? 'STORY<br><span class="hl">LIVES</span>'
           : 'REACH<br><span class="hl">DECLINED</span>';
@@ -1344,5 +1344,32 @@
         }
       })();
     </script>
-  </body>
+  <script>
+/* Keep every start / game over / name popup fully on screen: if the box is taller or wider
+   than the game window, shrink it to fit, so nothing in the games ever needs scrolling. */
+(function(){
+  function fit(){
+    document.querySelectorAll('.screen').forEach(function(sc){
+      var box = sc.querySelector('.psx-box');
+      if (!box || sc.classList.contains('hidden')) return;
+      box.style.transform = 'none';
+      var cs = getComputedStyle(sc);
+      var availH = sc.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+      var availW = sc.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+      var k = Math.min(1, availH / box.offsetHeight, availW / box.offsetWidth);
+      box.style.transform = k < 1 ? 'scale(' + (Math.floor(k * 1000) / 1000) + ')' : 'none';
+    });
+  }
+  var queued = false;
+  function queue(){ if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; fit(); }); }
+  window.addEventListener('resize', queue);
+  function boot(){
+    fit();
+    new MutationObserver(queue).observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ['class', 'style'], characterData: true });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(queue);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+</script>
+</body>
 </html>

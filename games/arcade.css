@@ -663,38 +663,39 @@ body.tw-embedded-game .mobile-pad {
   }
 }
 
-/* TW Oct 2026: bigger start and game over popups with readable text.
-   Sizes follow the game window (the iframe), so they scale on phones too. */
+/* TW Oct 2026: start and game over popups, sized between the original and the
+   larger pass. A small script in each game scales the box down whenever it would not
+   fit the game window, so popups never scroll. */
 body.tw-embedded-game .psx-box,
 .psx-box {
   transform: none;
-  width: min(88%, 380px);
-  max-width: 88%;
-  max-height: 96%;
-  overflow-y: auto;
-  padding: clamp(18px, 6vw, 30px) clamp(14px, 5vw, 26px);
+  transform-origin: center center;
+  width: min(84%, 340px);
+  max-width: 92%;
+  max-height: none;
+  overflow: visible;
+  padding: clamp(16px, 5vw, 26px) clamp(14px, 4.5vw, 24px);
 }
-.psx-eyebrow { font-size: clamp(8px, 2.6vw, 11px); letter-spacing: 3px; margin-bottom: 16px; }
-.psx-title { font-size: clamp(22px, 8vw, 32px); margin-bottom: 10px; }
-.psx-sub { font-size: clamp(8px, 2.6vw, 11px); line-height: 1.9; margin-bottom: 20px; color: #a9cbad; }
-.psx-ctrls { gap: 16px; margin-bottom: 22px; }
-.psx-key { font-size: clamp(10px, 3vw, 13px); padding: 7px 10px; }
-.psx-ctrl-lbl { font-size: clamp(8px, 2.3vw, 10px); color: #8fbf96; }
-.psx-btn { font-size: clamp(11px, 3.4vw, 14px); padding: 14px 26px; }
-.blink { font-size: clamp(8px, 2.6vw, 11px); }
-#nameWrap p { font-size: clamp(8px, 2.6vw, 11px) !important; margin-bottom: 8px !important; }
-#nameIn, #nameBtn { font-size: clamp(10px, 3vw, 13px) !important; padding: 8px 10px !important; }
+.psx-eyebrow { font-size: clamp(7px, 2.2vw, 9px); letter-spacing: 3px; margin-bottom: 14px; }
+.psx-title { font-size: clamp(20px, 6.4vw, 27px); margin-bottom: 8px; }
+.psx-sub { font-size: clamp(7px, 2.2vw, 9px); line-height: 1.85; margin-bottom: 18px; color: #a9cbad; }
+.psx-ctrls { gap: 14px; margin-bottom: 20px; }
+.psx-key { font-size: clamp(9px, 2.6vw, 11px); padding: 6px 9px; }
+.psx-ctrl-lbl { font-size: clamp(7px, 2vw, 8px); color: #8fbf96; }
+.psx-btn { font-size: clamp(9px, 2.8vw, 12px); padding: 12px 24px; }
+.blink { font-size: clamp(7px, 2.2vw, 9px); }
+#nameWrap p { font-size: clamp(7px, 2.2vw, 9px) !important; margin-bottom: 8px !important; }
+#nameIn, #nameBtn { font-size: clamp(9px, 2.6vw, 11px) !important; padding: 7px 9px !important; }
 #nameIn { width: 60% !important; }
-#lbWrap > p { font-size: clamp(10px, 3vw, 13px) !important; }
-#lbList { font-size: clamp(9px, 2.8vw, 12px) !important; line-height: 2.1 !important; }
-/* Game over holds the full top-10 leaderboard, so it runs a little tighter
-   (title on one line) to keep PLAY AGAIN on screen. */
-#endScr .psx-box { padding: clamp(14px, 4.5vw, 20px) clamp(14px, 4.5vw, 22px); }
+#lbWrap > p { font-size: clamp(9px, 2.6vw, 11px) !important; }
+#lbList { font-size: clamp(8px, 2.4vw, 10px) !important; line-height: 1.8 !important; }
+
+/* Game over holds the name box and the full top 10, so it runs a little tighter. */
+#endScr .psx-box { padding: clamp(14px, 4vw, 20px) clamp(14px, 4vw, 22px); }
 #endScr .psx-eyebrow { margin-bottom: 10px; }
-#endScr .psx-title { font-size: clamp(14px, 4.8vw, 18px); margin-bottom: 8px; }
+#endScr .psx-title { font-size: clamp(14px, 4.6vw, 18px); margin-bottom: 8px; }
 #endScr .psx-title br { display: none; }
 #endScr .psx-title .hl::before { content: " "; }
-#endScr .psx-sub { margin-bottom: 12px; }
+#endScr .psx-sub { margin-bottom: 10px; }
 #endScr #lbWrap { margin: 6px 0 10px !important; }
-#endScr #lbList { font-size: clamp(9px, 2.7vw, 11px) !important; line-height: 1.75 !important; }
-#endScr .psx-btn { padding: 11px 22px; }
+#endScr .psx-btn { padding: 10px 22px; }

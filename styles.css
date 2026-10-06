@@ -12046,3 +12046,10 @@ html body #output .single-tile { margin-left: auto !important; margin-right: 0 !
 #tw-breakroom .tw-score-row { grid-template-columns: 42px 1fr 86px !important; }
 @media (max-width: 820px) { #tw-breakroom .tw-score-row { grid-template-columns: 30px 1fr 62px !important; } }
 @media (max-width: 520px) { #tw-breakroom .tw-score-row { grid-template-columns: 24px 1fr 52px !important; } #tw-breakroom .tw-score-row span:last-child { display: block !important; } }
+
+/* Break room lines already type their own ">" so no automatic line prompt there (phones added a second one). */
+#tw-breakroom .tw-breakroom-copy .line::before,
+#tw-breakroom .tw-breakroom-copy.page-content.terminal-copy .line::before {
+  content: none !important;
+  display: none !important;
+}
