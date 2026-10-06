@@ -687,3 +687,14 @@ body.tw-embedded-game .psx-box,
 #nameIn { width: 60% !important; }
 #lbWrap > p { font-size: clamp(10px, 3vw, 13px) !important; }
 #lbList { font-size: clamp(9px, 2.8vw, 12px) !important; line-height: 2.1 !important; }
+/* Game over holds the full top-10 leaderboard, so it runs a little tighter
+   (title on one line) to keep PLAY AGAIN on screen. */
+#endScr .psx-box { padding: clamp(14px, 4.5vw, 20px) clamp(14px, 4.5vw, 22px); }
+#endScr .psx-eyebrow { margin-bottom: 10px; }
+#endScr .psx-title { font-size: clamp(14px, 4.8vw, 18px); margin-bottom: 8px; }
+#endScr .psx-title br { display: none; }
+#endScr .psx-title .hl::before { content: " "; }
+#endScr .psx-sub { margin-bottom: 12px; }
+#endScr #lbWrap { margin: 6px 0 10px !important; }
+#endScr #lbList { font-size: clamp(9px, 2.7vw, 11px) !important; line-height: 1.75 !important; }
+#endScr .psx-btn { padding: 11px 22px; }
