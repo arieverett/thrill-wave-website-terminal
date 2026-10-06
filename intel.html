@@ -267,7 +267,7 @@ try { if (navigator.audioSession) navigator.audioSession.type = 'ambient'; } cat
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
-<link href="styles.css?v=20261006h" rel="stylesheet"/>
+<link href="styles.css?v=20261006j" rel="stylesheet"/>
 <script type="application/ld+json">
 [
   {
@@ -3049,7 +3049,7 @@ try { if (navigator.audioSession) navigator.audioSession.type = 'ambient'; } cat
     var rows = readScores(game);
     var title = (GAMES[game] || GAMES.one_shot).label;
     var html = '';
-    html += '<div class="tw-score-head"><span>&gt; all time high scores</span><button type="button" data-score-close aria-label="close high scores">×</button></div>';
+    html += '<div class="tw-score-head"><span>all time high scores</span><button type="button" data-score-close aria-label="close high scores">×</button></div>';
     html += '<div class="tw-score-sub">' + escapeHtml(title) + '</div>';
     if (!rows.length) {
       html += '<div class="tw-score-empty">no scores yet. play a round and claim the board.</div>';
@@ -3081,7 +3081,7 @@ try { if (navigator.audioSession) navigator.audioSession.type = 'ambient'; } cat
     var current = getPlayerName();
     card.innerHTML = ''+
       '<form class="tw-name-form" data-name-form novalidate>'+
-        '<div class="tw-score-head"><span>&gt; enter name</span><button type="button" data-score-close aria-label="close name editor">×</button></div>'+
+        '<div class="tw-score-head"><span>enter name</span><button type="button" data-score-close aria-label="close name editor">×</button></div>'+
         '<label class="tw-name-label" for="tw-player-name-input">arcade name</label>'+
         '<input id="tw-player-name-input" class="tw-name-input" data-name-input maxlength="16" autocomplete="off" spellcheck="false" value="'+escapeHtml(current)+'">'+
         '<div class="tw-name-rules">letters, numbers, spaces, dots, dashes, underscores, apostrophes, and & only.</div>'+

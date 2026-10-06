@@ -12139,3 +12139,51 @@ html body #output .single-tile { margin-left: auto !important; margin-right: 0 !
   #tw-breakroom .tw-breakroom-score-panel { inset: 41px 8px 0 !important; padding: 6px 0 !important; }
   #tw-breakroom .tw-score-row { grid-template-columns: 3ch minmax(0, 1fr) auto !important; }
 }
+
+/* High scores / name menus styled like the side menu: dark header bar with small grey
+   spaced title and a thin bottom rule, plain black body, grey border, no glow. */
+#tw-breakroom .tw-breakroom-score-card {
+  padding: 0 0 18px !important;
+  background: #000 !important;
+  border: 1px solid #2e2e2e !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+#tw-breakroom .tw-breakroom-score-card .tw-score-head {
+  height: 36px !important;
+  margin: 0 0 16px !important;
+  padding: 0 7px 0 16px !important;
+  box-sizing: border-box !important;
+  background: #0a0a0a !important;
+  border-bottom: 1px solid #1a1a1a !important;
+  border-radius: 4px 4px 0 0 !important;
+  align-items: center !important;
+}
+#tw-breakroom .tw-breakroom-score-card .tw-score-head > span {
+  color: #777 !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  letter-spacing: 1.5px !important;
+  line-height: 1 !important;
+}
+#tw-breakroom .tw-breakroom-score-card .tw-score-head button[data-score-close] { margin: 0 !important; }
+#tw-breakroom .tw-breakroom-score-card > :not(.tw-score-head):not(.tw-name-form),
+#tw-breakroom .tw-name-form > :not(.tw-score-head) {
+  margin-left: 20px !important;
+  margin-right: 20px !important;
+}
+#tw-breakroom .tw-name-form { margin: 0 !important; }
+@media (max-width: 520px) {
+  #tw-breakroom .tw-breakroom-score-card > :not(.tw-score-head):not(.tw-name-form),
+  #tw-breakroom .tw-name-form > :not(.tw-score-head) { margin-left: 14px !important; margin-right: 14px !important; }
+}
+#tw-breakroom .tw-name-form .tw-name-input {
+  width: calc(100% - 40px) !important;
+  box-sizing: border-box !important;
+  display: block !important;
+}
+#tw-breakroom .tw-name-form .tw-name-input:focus { box-shadow: none !important; }
+@media (max-width: 520px) {
+  #tw-breakroom .tw-name-form .tw-name-input { width: calc(100% - 28px) !important; }
+}
