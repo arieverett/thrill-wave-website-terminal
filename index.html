@@ -262,8 +262,9 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
-<link href="styles.css?v=20261006" rel="stylesheet"/>
-<script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+<link href="styles.css?v=20261006b" rel="stylesheet"/>
+<script>window.__toneReady=new Promise(function(r){window.__toneLoaded=r;});</script>
+<script async crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js" onload="window.__toneLoaded&&window.__toneLoaded()" onerror="window.__toneLoaded&&window.__toneLoaded()"></script>
 <script type="application/ld+json">
 [
   {
@@ -903,10 +904,10 @@
   }, true);
 }());
 </script>
-<audio id="bg-audio" loop="" playsinline="" preload="auto" webkit-playsinline="">
+<audio id="bg-audio" loop="" playsinline="" preload="metadata" webkit-playsinline="">
 <source src="assets/audio/robot_rock.mp3" type="audio/mpeg"/>
 </audio>
-<audio id="break-audio" loop="" playsinline="" preload="auto" webkit-playsinline="">
+<audio id="break-audio" loop="" playsinline="" preload="none" webkit-playsinline="">
 <source src="assets/audio/da_funk.mp3" type="audio/mpeg"/>
 </audio>
 <main class="content">
@@ -945,21 +946,21 @@
 <span class="line" data-breakroom-line="&gt; Take a load off. Choose a game:">&gt; Take a load off. Choose a game:</span>
 </div>
 <div class="tw-breakroom-grid" aria-label="secret break room games">
-<button class="tw-breakroom-card" type="button" data-game-src="games/one_shot.html?embed=1&amp;v=20261006" onclick="return window.twBreakRoomLaunch ? window.twBreakRoomLaunch(this,event) : false;">
+<button class="tw-breakroom-card" type="button" data-game-src="games/one_shot.html?embed=1&amp;v=20261006b" onclick="return window.twBreakRoomLaunch ? window.twBreakRoomLaunch(this,event) : false;">
 <span class="tw-breakroom-card__sprite" aria-hidden="true">📷</span>
 <span class="tw-breakroom-card__num">[01]</span>
 <span class="tw-breakroom-card__title">one shot</span>
 <span class="tw-breakroom-card__copy">jump the plant hazards and clear the shot.</span>
 <span class="tw-breakroom-card__launch">&gt; launch</span>
 </button>
-<button class="tw-breakroom-card" type="button" data-game-src="games/going_viral.html?embed=1&amp;v=20261006" onclick="return window.twBreakRoomLaunch ? window.twBreakRoomLaunch(this,event) : false;">
+<button class="tw-breakroom-card" type="button" data-game-src="games/going_viral.html?embed=1&amp;v=20261006b" onclick="return window.twBreakRoomLaunch ? window.twBreakRoomLaunch(this,event) : false;">
 <span class="tw-breakroom-card__sprite" aria-hidden="true">⚔️</span>
 <span class="tw-breakroom-card__num">[02]</span>
 <span class="tw-breakroom-card__title">going viral</span>
 <span class="tw-breakroom-card__copy">outrun the algorithm before it outruns you.</span>
 <span class="tw-breakroom-card__launch">&gt; launch</span>
 </button>
-<button class="tw-breakroom-card" type="button" data-game-src="games/content_defense.html?embed=1&amp;v=20261006" onclick="return window.twBreakRoomLaunch ? window.twBreakRoomLaunch(this,event) : false;">
+<button class="tw-breakroom-card" type="button" data-game-src="games/content_defense.html?embed=1&amp;v=20261006b" onclick="return window.twBreakRoomLaunch ? window.twBreakRoomLaunch(this,event) : false;">
 <span class="tw-breakroom-card__sprite" aria-hidden="true">🛡️</span>
 <span class="tw-breakroom-card__num">[03]</span>
 <span class="tw-breakroom-card__title">story defense</span>
@@ -1084,7 +1085,7 @@
 <div class="cascade work-cascade" data-expanded="true">
 <span aria-expanded="true" class="cascade-toggle" role="button" tabindex="0"><span class="prompt">&gt;</span><span class="cmd-action">show</span><span class="cmd-name">film_01</span><span class="toggle-mark"></span></span>
 <div class="cascade-content"><div class="cascade-video"><div class="vid-frame">
-<iframe allow="autoplay; fullscreen; picture-in-picture" allowfullscreen="" data-src="https://player.vimeo.com/video/1169833679?autoplay=1&amp;muted=1&amp;loop=1&amp;title=0&amp;byline=0&amp;portrait=0" src="https://player.vimeo.com/video/1169833679?autoplay=1&amp;muted=1&amp;loop=1&amp;title=0&amp;byline=0&amp;portrait=0"></iframe>
+<iframe allow="autoplay; fullscreen; picture-in-picture" allowfullscreen="" data-src="https://player.vimeo.com/video/1169833679?autoplay=1&amp;muted=1&amp;loop=1&amp;title=0&amp;byline=0&amp;portrait=0" src="about:blank" data-lazy-film=""></iframe>
 </div></div></div>
 </div>
 <div class="cascade work-cascade" data-expanded="false">
@@ -1150,15 +1151,15 @@
 </div>
 <div class="team-grid">
 <figure class="team-card">
-<div class="photo"><img alt="Chris Kuzman" src="assets/team/chris.avif"/></div>
+<div class="photo"><img alt="Chris Kuzman" src="assets/team/chris.avif" loading="lazy" decoding="async"/></div>
 <figcaption class="team-caption">chris // founder + strategy</figcaption>
 </figure>
 <figure class="team-card">
-<div class="photo"><img alt="Tony Swann" src="assets/team/tony.avif"/></div>
+<div class="photo"><img alt="Tony Swann" src="assets/team/tony.avif" loading="lazy" decoding="async"/></div>
 <figcaption class="team-caption">tony // founder + director</figcaption>
 </figure>
 <figure class="team-card">
-<div class="photo"><img alt="Ari Everett" src="assets/team/ari.avif"/></div>
+<div class="photo"><img alt="Ari Everett" src="assets/team/ari.avif" loading="lazy" decoding="async"/></div>
 <figcaption class="team-caption">ari // founder + producer</figcaption>
 </figure>
 </div>
@@ -1327,6 +1328,10 @@ let SND = {};
 
 async function initAudio() {
   if (audioReady) return;
+  // Tone.js loads in the background (async) so it never blocks the page; wait for it here.
+  if (typeof Tone === 'undefined' && window.__toneReady) {
+    await Promise.race([window.__toneReady, new Promise(function(r){ setTimeout(r, 2500); })]);
+  }
   if (typeof Tone === 'undefined') {
     console.warn('Tone.js not loaded; running silent');
     return;
@@ -3002,6 +3007,10 @@ document.getElementById('skip-btn').addEventListener('click', skipSequence);
   // user navigated back to home from another page (boot skipped) we need
   // to initialize on demand so the replay typing still has click sounds.
   async function ensureTypeAudio() {
+    // Tone.js loads in the background (async) so it never blocks the page; wait for it here.
+    if (typeof Tone === 'undefined' && window.__toneReady) {
+      await Promise.race([window.__toneReady, new Promise(function(r){ setTimeout(r, 2500); })]);
+    }
     if (typeof Tone === 'undefined') return;
     try {
       if (Tone.context && Tone.context.state !== 'running') {
@@ -3192,8 +3201,10 @@ document.getElementById('skip-btn').addEventListener('click', skipSequence);
       if (c.classList.contains('intel-cascade')) return 'intel-cascade';
       return '';
     }
-    function loadFrames(c, opening) {
+    function loadFrames(c, opening, fromInit) {
       c.querySelectorAll('iframe[data-src]').forEach(frame => {
+        // Films marked data-lazy-film load when scrolled near (see the speed script), not at startup.
+        if (fromInit && frame.hasAttribute('data-lazy-film')) return;
         if (opening) {
           if (!frame.getAttribute('src') || frame.getAttribute('src') === 'about:blank') frame.setAttribute('src', frame.dataset.src);
         } else if (c.classList.contains('work-cascade')) {
@@ -3215,7 +3226,7 @@ document.getElementById('skip-btn').addEventListener('click', skipSequence);
     terminalBody.querySelectorAll('.cascade[data-expanded="true"]').forEach(c => {
       const t = c.querySelector('.cascade-toggle');
       if (t) t.setAttribute('aria-expanded', 'true');
-      loadFrames(c, true);
+      loadFrames(c, true, true);
     });
     terminalBody.querySelectorAll('.cascade-toggle').forEach(tg => {
       if (tg.dataset.pjaxBound === '1') return;
@@ -3702,8 +3713,10 @@ document.getElementById('skip-btn').addEventListener('click', skipSequence);
 // One clean controller. Work films and Intel articles use mutual exclusion.
 // ============================================================
 (function cascadeHardReset(){
-  function resetIframes(cascade, opening){
+  function resetIframes(cascade, opening, fromInit){
     cascade.querySelectorAll('iframe[data-src]').forEach(function(frame){
+      // Films marked data-lazy-film load when scrolled near (see the speed script), not at startup.
+      if (fromInit && frame.hasAttribute('data-lazy-film')) return;
       if (opening) {
         if (!frame.getAttribute('src') || frame.getAttribute('src') === 'about:blank') {
           frame.setAttribute('src', frame.dataset.src);
@@ -3748,7 +3761,7 @@ document.getElementById('skip-btn').addEventListener('click', skipSequence);
     document.querySelectorAll('.cascade[data-expanded="true"]').forEach(function(cascade){
       var toggle = cascade.querySelector('.cascade-toggle');
       if (toggle) toggle.setAttribute('aria-expanded', 'true');
-      resetIframes(cascade, true);
+      resetIframes(cascade, true, true);
     });
   }
 
@@ -5141,14 +5154,13 @@ document.getElementById('skip-btn').addEventListener('click', skipSequence);
       html += '<div class="tw-score-empty">no scores yet. play a round and claim the board.</div>';
     } else {
       html += '<div class="tw-score-table" role="table" aria-label="all time high scores">';
-      html += '<div class="tw-score-row tw-score-row--head" role="row"><span>#</span><span>name</span><span>score</span><span>date</span></div>';
+      html += '<div class="tw-score-row tw-score-row--head" role="row"><span>#</span><span>name</span><span>score</span></div>';
       rows.forEach(function(r, i){
         var isFresh = freshEntry && r.score === freshEntry.score && r.name === freshEntry.name && r.date === freshEntry.date;
         html += '<div class="tw-score-row' + (isFresh ? ' is-new' : '') + '" role="row">';
         html += '<span>' + String(i+1).padStart(2,'0') + '</span>';
         html += '<span>' + escapeHtml(r.name) + '</span>';
         html += '<span>' + String(r.score).padStart(5,'0') + '</span>';
-        html += '<span>' + escapeHtml(formatDate(r.date)) + '</span>';
         html += '</div>';
       });
       html += '</div>';
@@ -5349,6 +5361,42 @@ document.getElementById('skip-btn').addEventListener('click', skipSequence);
 })();
 </script>
 
+<script>
+/* Speed: a film that starts open waits until it scrolls near view instead of loading its
+   player during the intro. Also covers pages the terminal swaps in later. */
+(function(){
+  var io = ('IntersectionObserver' in window) ? new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if (e.isIntersecting) { load(e.target); io.unobserve(e.target); } });
+  }, { rootMargin: '600px 0px' }) : null;
+  function load(f){ if (f.getAttribute('src') === 'about:blank' && f.closest('.cascade[data-expanded="true"]')) f.setAttribute('src', f.dataset.src); }
+  var seen = ('WeakSet' in window) ? new WeakSet() : null;
+  function scan(root){
+    (root.querySelectorAll ? root.querySelectorAll('iframe[data-lazy-film]') : []).forEach(function(f){
+      if (seen) { if (seen.has(f)) return; seen.add(f); }
+      if (io) io.observe(f); else load(f);
+    });
+  }
+  function boot(){
+    scan(document);
+    if ('MutationObserver' in window) new MutationObserver(function(list){
+      list.forEach(function(m){ m.addedNodes.forEach(function(n){ if (n.nodeType === 1) scan(n.matches && n.matches('iframe') ? n.parentNode : n); }); });
+    }).observe(document.body, { childList: true, subtree: true });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+</script>
+<script>
+/* Speed: once the page is idle, quietly warm the browser cache with the other terminal pages
+   so moving between them feels instant. Skipped on data-saver and slow connections. */
+(function(){
+  var c = navigator.connection || {};
+  if (c.saveData || /2g/.test(c.effectiveType || '')) return;
+  var pages = ['index.html','about.html','sitrep.html','work.html','intel.html','contact.html'];
+  var here = location.pathname.split('/').pop() || 'index.html';
+  function warm(){ pages.forEach(function(p, i){ if (p === here || (here === '' && p === 'index.html')) return; setTimeout(function(){ try { fetch(p, { credentials: 'same-origin' }).catch(function(){}); } catch(e) {} }, i * 400); }); }
+  window.addEventListener('load', function(){ setTimeout(function(){ ("requestIdleCallback" in window) ? requestIdleCallback(warm, { timeout: 6000 }) : warm(); }, 9000); });
+})();
+</script>
 <script src="prompt-rail.js" defer></script>
 </body>
 </html>

@@ -262,7 +262,7 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
-<link href="styles.css?v=20261006" rel="stylesheet"/>
+<link href="styles.css?v=20261006b" rel="stylesheet"/>
 <script type="application/ld+json">
 [
   {
@@ -819,10 +819,10 @@
 <div class="frame-label frame-label--bl"><span id="clock">--:--:--</span></div>
 <div class="frame-label frame-label--br">work  ·  04 / 06</div>
 </div>
-<audio id="bg-audio" loop="" playsinline="" preload="auto" webkit-playsinline="">
+<audio id="bg-audio" loop="" playsinline="" preload="metadata" webkit-playsinline="">
 <source src="assets/audio/robot_rock.mp3" type="audio/mpeg"/>
 </audio>
-<audio id="break-audio" loop="" playsinline="" preload="auto" webkit-playsinline="">
+<audio id="break-audio" loop="" playsinline="" preload="none" webkit-playsinline="">
 <source src="assets/audio/da_funk.mp3" type="audio/mpeg"/>
 </audio>
 <main class="content">
@@ -1887,8 +1887,10 @@
 // One clean controller. Work films and Intel articles use mutual exclusion.
 // ============================================================
 (function cascadeHardReset(){
-  function resetIframes(cascade, opening){
+  function resetIframes(cascade, opening, fromInit){
     cascade.querySelectorAll('iframe[data-src]').forEach(function(frame){
+      // Films marked data-lazy-film load when scrolled near (see the speed script), not at startup.
+      if (fromInit && frame.hasAttribute('data-lazy-film')) return;
       if (opening) {
         if (!frame.getAttribute('src') || frame.getAttribute('src') === 'about:blank') {
           frame.setAttribute('src', frame.dataset.src);
@@ -1933,7 +1935,7 @@
     document.querySelectorAll('.cascade[data-expanded="true"]').forEach(function(cascade){
       var toggle = cascade.querySelector('.cascade-toggle');
       if (toggle) toggle.setAttribute('aria-expanded', 'true');
-      resetIframes(cascade, true);
+      resetIframes(cascade, true, true);
     });
   }
 
@@ -3556,6 +3558,42 @@
       other.querySelectorAll('iframe[data-src]').forEach(function(frame){ frame.setAttribute('src', 'about:blank'); });
     });
   }, true);
+})();
+</script>
+<script>
+/* Speed: a film that starts open waits until it scrolls near view instead of loading its
+   player during the intro. Also covers pages the terminal swaps in later. */
+(function(){
+  var io = ('IntersectionObserver' in window) ? new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if (e.isIntersecting) { load(e.target); io.unobserve(e.target); } });
+  }, { rootMargin: '600px 0px' }) : null;
+  function load(f){ if (f.getAttribute('src') === 'about:blank' && f.closest('.cascade[data-expanded="true"]')) f.setAttribute('src', f.dataset.src); }
+  var seen = ('WeakSet' in window) ? new WeakSet() : null;
+  function scan(root){
+    (root.querySelectorAll ? root.querySelectorAll('iframe[data-lazy-film]') : []).forEach(function(f){
+      if (seen) { if (seen.has(f)) return; seen.add(f); }
+      if (io) io.observe(f); else load(f);
+    });
+  }
+  function boot(){
+    scan(document);
+    if ('MutationObserver' in window) new MutationObserver(function(list){
+      list.forEach(function(m){ m.addedNodes.forEach(function(n){ if (n.nodeType === 1) scan(n.matches && n.matches('iframe') ? n.parentNode : n); }); });
+    }).observe(document.body, { childList: true, subtree: true });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+</script>
+<script>
+/* Speed: once the page is idle, quietly warm the browser cache with the other terminal pages
+   so moving between them feels instant. Skipped on data-saver and slow connections. */
+(function(){
+  var c = navigator.connection || {};
+  if (c.saveData || /2g/.test(c.effectiveType || '')) return;
+  var pages = ['index.html','about.html','sitrep.html','work.html','intel.html','contact.html'];
+  var here = location.pathname.split('/').pop() || 'index.html';
+  function warm(){ pages.forEach(function(p, i){ if (p === here || (here === '' && p === 'index.html')) return; setTimeout(function(){ try { fetch(p, { credentials: 'same-origin' }).catch(function(){}); } catch(e) {} }, i * 400); }); }
+  window.addEventListener('load', function(){ setTimeout(function(){ ("requestIdleCallback" in window) ? requestIdleCallback(warm, { timeout: 6000 }) : warm(); }, 9000); });
 })();
 </script>
 <script src="prompt-rail.js" defer></script>
