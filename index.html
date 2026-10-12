@@ -2802,14 +2802,14 @@ document.getElementById('skip-btn').addEventListener('click', skipSequence);
 
   // ---------- typing animation copy ----------
   const introPreLines = [
-    { t: '> hi.', p: 700 },
-    { t: '> welcome to thrill wave.', p: 650 },
+    { t: '> hi.', p: 950 },
+    { t: '> welcome to thrill wave.', p: 600 },
   ];
 
   const introPostLines = [
-    { t: "we are a video production company based in phoenix, az. we make films for people, not audiences.", p: 450 },
-    { t: '', p: 300 },
-    { t: 'press enter or scroll to continue.', p: 250 },
+    { t: "we are a video production company based in phoenix, az. we make films for people, not audiences.", p: 500 },
+    { t: '', p: 280 },
+    { t: 'press enter or scroll to continue.', p: 120 },
     { t: 'use menu to jump to any page.', p: 0 },
   ];
 
@@ -2854,12 +2854,8 @@ document.getElementById('skip-btn').addEventListener('click', skipSequence);
             window.twTypeClick();
           }
           j++;
-          // Slightly faster homepage typing, with a breath after punctuation like someone actually typing:
-          // a beat after commas and colons, a longer one after a full stop (Oct 12, 2026, Ari)
-          let d = c === ' ' ? 14 : 28 + Math.random() * 16;
-          const after = line.t[j];
-          if (/[.!?]/.test(c) && (after === ' ' || after === undefined)) d += 380;
-          else if (/[,;:]/.test(c) && after === ' ') d += 190;
+          // Slightly faster homepage typing.
+          const d = c === ' ' ? 14 : 28 + Math.random() * 16;
           setTimeout(ch, d);
         } else {
           if (line.glyph) html += '<span class="tw-logo-glyph tw-logo-glyph--inline" aria-hidden="true"></span>';
@@ -2887,7 +2883,7 @@ document.getElementById('skip-btn').addEventListener('click', skipSequence);
       if (i >= plain.length) {
         // Done — replace plain with styled HTML; CSS handles [+]/[-] via ::before
         toggle.innerHTML = '<span class="prompt">&gt;</span><span class="cmd-action">show</span><span class="cmd-name">intro_video</span><span class="toggle-mark"></span>';
-        setTimeout(done, 450);
+        setTimeout(done, 250);
         return;
       }
       const c = plain[i];
@@ -2942,7 +2938,6 @@ document.getElementById('skip-btn').addEventListener('click', skipSequence);
         typeCascadeToggle(myGen, () => {
           if ((window.twTypingGen || 0) !== myGen) return;
           expandCascadeContent();
-          // let the video drop open and settle (the open takes ~0.5s) before the paragraph starts typing
           setTimeout(() => {
             if ((window.twTypingGen || 0) !== myGen) return;
             typeLines(postEl, introPostLines, () => {
@@ -2955,7 +2950,7 @@ document.getElementById('skip-btn').addEventListener('click', skipSequence);
                 document.body.classList.add('home-intro-complete');
               }, 2450);
             });
-          }, 1600);
+          }, 700);
         });
       });
     }, 2000);
