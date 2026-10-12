@@ -6,7 +6,7 @@
       in the corner 5 times on a phone. The site rolls its own end credits to its own song (only when the
       music is already on) and ends on "a thrill wave film".
    3. blue pill : "blue pill" next to skip on the intro, the "blue pill" label on the top right of the outer
-      frame, [07] blue pill in the menu, typing "bluepill", or the end of the credits.
+      frame, [07] blue pill in the menu, the esc key, typing "bluepill", or the end of the credits.
       The frame label and menu item ask first, then power the system down like on / off,
       type "you chose comfort. goodbye." and leave for thrillwave.com. */
 (function twEasterEggs() {
@@ -40,15 +40,15 @@
     '.tw-egg__btn:hover,.tw-egg__btn:focus-visible{color:var(--accent);border-color:var(--accent);outline:none}',
     '.tw-egg__btn--blue:hover,.tw-egg__btn--blue:focus-visible{color:var(--tw-blue);border-color:var(--tw-blue);text-shadow:0 0 8px rgba(25,45,254,.7)}',
     // credits
-    '.tw-egg--credits{display:block;overflow:hidden}',
+    '.tw-egg--credits{display:block;overflow:hidden;color:var(--accent)}',
     '.tw-egg__roll{width:min(520px,calc(100% - 48px));margin:0 auto;padding-top:100vh;will-change:transform}',
     '.tw-egg__title{text-align:center;letter-spacing:2px;margin:0 0 2.6em}',
     '.tw-egg__row{display:flex;justify-content:space-between;align-items:baseline;gap:20px;margin:.3em 0}',
-    '.tw-egg__row span:first-child{color:var(--muted);flex:0 0 auto}',
+    '.tw-egg__row span:first-child{opacity:.6;flex:0 0 auto}',
     '.tw-egg__row span:last-child{text-align:right}',
     '.tw-egg__stack{text-align:center;margin:.3em 0}',
     '.tw-egg__stack span{display:block}',
-    '.tw-egg__stack span:first-child{color:var(--muted);margin-bottom:.3em}',
+    '.tw-egg__stack span:first-child{opacity:.6;margin-bottom:.3em}',
     '.tw-egg__gap{height:2.2em}',
     '.tw-egg__card{margin-top:75vh;text-align:center;letter-spacing:.3em}',
     '.tw-egg__end{position:absolute;left:0;right:0;bottom:14vh;display:flex;justify-content:center;padding:0 24px}',
@@ -198,8 +198,8 @@
   var CREDITS = [
     ['title', 'thrill_wave'],
     ['row', 'producer', 'ari everett'],
-    ['row', 'director / dp', 'tony swann'],
-    ['row', 'strategy & sitrep', 'chris kuzman'],
+    ['row', 'director', 'chris kuzman'],
+    ['row', 'director of photography', 'tony swann'],
     ['gap'],
     ['row', 'written, shot and cut in', 'phoenix, az'],
     ['row', 'founded', '2018'],
@@ -293,6 +293,7 @@
     stopSong();
     decks().forEach(function (d) { if (d) try { d.pause(); } catch (e) {} });
     var el = overlay();
+    el.setAttribute('data-final', '');
     var block = typedBlock(el, 2);
     (async function () {
       await wait(600);
@@ -427,14 +428,37 @@
     closeModal();
   }, true);
 
+  // ---------- esc: the blue pill hotkey ----------
+  // Runs at the window, before the page's own esc handlers, so it sees what was open when the key went down.
+  // Esc closes whatever is open first (an easter egg, the blue pill box, the menu, on / off, the break room);
+  // with nothing open it's the way out: the intro and boot go straight to "you chose comfort",
+  // everywhere else it asks first with the blue pill box.
+  window.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape' && e.key !== 'Esc') return;
+    var body = document.body, t = e.target;
+    if (!body || body.classList.contains('tw-powering-down')) return;
+    if (open) {
+      if (!open.hasAttribute('data-final')) { e.preventDefault(); close(); }
+      return;
+    }
+    if (body.classList.contains('bluepill-modal-open')) { e.preventDefault(); closeModal(); return; }
+    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable)) return;
+    if (document.fullscreenElement || document.webkitFullscreenElement) return;
+    // the on / off box's own esc handler swallows every esc on the page, so the menu never closed on esc; close it here
+    if (body.classList.contains('menu-open')) { e.preventDefault(); closeMenu(); return; }
+    if (body.classList.contains('power-modal-open') ||
+        body.classList.contains('tw-terminal-minimized') || body.classList.contains('tw-breakroom-game-active')) return;
+    e.preventDefault();
+    var gate = document.getElementById('welcome-gate');
+    var boot = document.getElementById('boot-root');
+    var intro = (gate && !gate.classList.contains('gone')) || (boot && boot.classList.contains('boot-running'));
+    if (intro) bluePill(); else openModal();
+  }, true);
+
   // ---------- triggers: typed words, Konami code, clock taps ----------
   var KONAMI = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a'];
   var keys = [], typed = '';
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') {
-      if (document.body.classList.contains('bluepill-modal-open')) { closeModal(); return; }
-      if (open) { close(); return; }
-    }
     var t = e.target;
     if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
     var k = (e.key || '').toLowerCase();
