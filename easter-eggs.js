@@ -446,13 +446,43 @@
     if (document.fullscreenElement || document.webkitFullscreenElement) return;
     // the on / off box's own esc handler swallows every esc on the page, so the menu never closed on esc; close it here
     if (body.classList.contains('menu-open')) { e.preventDefault(); closeMenu(); return; }
-    if (body.classList.contains('power-modal-open') ||
-        body.classList.contains('tw-terminal-minimized') || body.classList.contains('tw-breakroom-game-active')) return;
+    // break room: esc closes high scores / name, then leaves the game, then leaves the room
+    // (the room's own esc handling never ran, for the same reason as the menu)
+    if (escBreakroom()) { e.preventDefault(); return; }
+    if (body.classList.contains('power-modal-open')) return;
     e.preventDefault();
     var gate = document.getElementById('welcome-gate');
     var boot = document.getElementById('boot-root');
     var intro = (gate && !gate.classList.contains('gone')) || (boot && boot.classList.contains('boot-running'));
     if (intro) bluePill(); else openModal();
+  }, true);
+
+  function escBreakroom() {
+    var body = document.body;
+    if (!body.classList.contains('tw-terminal-minimized') && !body.classList.contains('tw-breakroom-game-active')) return false;
+    var panel = document.querySelector('[data-breakroom-score-panel].is-open');
+    var btn = panel && panel.querySelector('[data-score-close]');
+    if (!btn && body.classList.contains('tw-breakroom-game-active')) btn = document.querySelector('[data-breakroom-back]');
+    if (!btn) btn = document.querySelector('[data-breakroom-exit]');
+    if (btn) btn.click();
+    return true;
+  }
+  // While a game is being played, the keyboard belongs to the game's own frame, so esc never reaches this page.
+  // The games live on this site, so listen inside each one as it loads and pass esc back out.
+  document.addEventListener('load', function (e) {
+    var f = e.target;
+    if (!f || f.tagName !== 'IFRAME' || !f.hasAttribute('data-breakroom-game-frame')) return;
+    try {
+      var w = f.contentWindow;
+      if (!w || w.__twEscBridge) return;
+      w.__twEscBridge = true;
+      w.addEventListener('keydown', function (k) {
+        if (k.key !== 'Escape' && k.key !== 'Esc') return;
+        k.preventDefault();
+        try { f.blur(); window.focus(); } catch (x) {}
+        escBreakroom();
+      }, true);
+    } catch (x) {}
   }, true);
 
   // ---------- triggers: typed words, Konami code, clock taps ----------
