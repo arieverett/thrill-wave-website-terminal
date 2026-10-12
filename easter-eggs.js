@@ -33,7 +33,7 @@
     '.tw-egg .welcome-text{margin-bottom:0}',
     '.tw-egg__actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:48px;opacity:0;pointer-events:none}',
     '.tw-egg__actions.is-on{opacity:1;pointer-events:auto}',
-    // buttons: the same look as "click to start" (white, 1px white border), green or neon blue on hover
+    // buttons: the same look as "click to start" (white, 1px white border), green or Keep scrolling blue on hover
     '.tw-egg__btn{font-family:var(--font);font-size:11.6px;font-weight:500;color:var(--fg,#fff);background:transparent;border:1px solid var(--fg,#fff);',
     'border-radius:4px;padding:9px 17px;height:29px;box-sizing:border-box;display:inline-flex;align-items:center;letter-spacing:1.6px;line-height:1;',
     'text-transform:lowercase;cursor:pointer;text-decoration:none;transition:color .18s ease,border-color .18s ease,text-shadow .18s ease}',
