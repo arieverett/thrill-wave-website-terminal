@@ -188,17 +188,34 @@
 
   // ---------- 3. blue pill ----------
   function bluePill() {
+    // Same look as the opening "hi. / welcome to thrill wave." gate: white mono lines with a "> " prompt
+    // and one blinking block cursor that moves down line by line (styles from .welcome-* in styles.css)
     var el = overlay();
-    el.style.color = '#6f8cff';
-    var box = document.createElement('div'); box.className = 'tw-egg__box'; el.appendChild(box);
-    var l1 = document.createElement('div'); l1.className = 'tw-egg__line'; box.appendChild(l1);
-    var l2 = document.createElement('div'); l2.className = 'tw-egg__line'; box.appendChild(l2);
+    var inner = document.createElement('div'); inner.className = 'welcome-inner'; el.appendChild(inner);
+    var text = document.createElement('div'); text.className = 'welcome-text'; inner.appendChild(text);
+    var cursor = document.createElement('span'); cursor.className = 'welcome-cursor';
+    function line() {
+      var l = document.createElement('div'); l.className = 'welcome-line';
+      var t = document.createElement('span'); t.className = 'line-text'; l.appendChild(t);
+      text.appendChild(l); l.appendChild(cursor); return t;
+    }
+    function type(target, str, speed) {
+      if (reduce) { target.textContent = str; return Promise.resolve(); }
+      var i = 0;
+      return new Promise(function (done) {
+        (function step() {
+          if (!el.isConnected || i >= str.length) return done();
+          target.textContent += str[i++];
+          setTimeout(step, speed);
+        })();
+      });
+    }
     (async function () {
-      await wait(500);
-      await typeInto(l1, 'you chose comfort.', 70);
-      await wait(500);
-      await typeInto(l2, 'that’s ok.', 70);
-      await wait(1400);
+      await wait(600);
+      await type(line(), '> you chose comfort.', 42);
+      await wait(650);
+      await type(line(), '> that\u2019s ok.', 42);
+      await wait(1600);
       if (el.isConnected) window.location.href = HOME;
     })();
   }
