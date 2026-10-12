@@ -1211,14 +1211,18 @@ try { if (navigator.audioSession) navigator.audioSession.type = 'ambient'; } cat
 <a href="mailto:hi@thrillwave.com">hi@thrillwave.com</a>
 <span class="sep">·</span>
 <a href="tel:+14807669585">480.766.9585</a>
-<span class="sep social-sep">·</span>
+<span class="sep social-sep">·</span><span aria-hidden="true" class="mobile-break"></span>
 <a href="https://www.instagram.com/thrillwave_" rel="noopener" target="_blank">insta</a>
 <span class="sep">·</span>
 <a href="https://vimeo.com/thrillwave" rel="noopener" target="_blank">vimeo</a>
 <span class="sep">·</span>
 <a href="https://x.com/thrillwave_" rel="noopener" target="_blank">x</a>
 <span class="sep">·</span>
+<a href="https://www.tiktok.com/@thrillwave_" rel="noopener" target="_blank">tiktok</a>
+<span class="sep">·</span>
 <a href="https://www.linkedin.com/company/thrillwave" rel="noopener" target="_blank">linkedin</a>
+<span class="sep">·</span>
+<a href="https://www.facebook.com/thrillwaveco/" rel="noopener" target="_blank">fb</a>
 </div>
 </div>
 </main>
@@ -3216,7 +3220,7 @@ document.getElementById('skip-btn').addEventListener('click', skipSequence);
     const label = PAGE_LABELS[page] || 'home';
     if (titlePage) titlePage.textContent = label;
     if (pageIndicator) pageIndicator.innerHTML = PAGE_INDICATORS[page] || PAGE_INDICATORS['index.html'];
-    document.title = 'Thrill Wave | ' + (label === 'home' ? 'Phoenix Video Production Company' : label);
+    document.title = label === 'home' ? 'Thrill Wave | Phoenix Video Production Company' : ({ sitrep: 'SITREP' }[label] || (label.charAt(0).toUpperCase() + label.slice(1))) + ' | Thrill Wave';
 
     document.querySelectorAll('.menu-item').forEach(a => {
       const hrefPage = normalizePage(a.getAttribute('href') || a.dataset.page || 'index.html');

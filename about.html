@@ -383,7 +383,7 @@ try { if (navigator.audioSession) navigator.audioSession.type = 'ambient'; } cat
     }
     if (iframe && iframe.dataset && iframe.dataset.src) iframe.setAttribute('src', iframe.dataset.src);
     if (post && !post.innerHTML.trim()) {
-      post.innerHTML = '&gt; we are a video production company based in phoenix, az, that makes films for people, not audiences.<br>&gt;<br>&gt; press enter or scroll down to go to the next section, or click menu to jump to a page.<br>';
+      post.innerHTML = 'we are a video production company based in phoenix, az, that makes films for people, not audiences.<br><br>press enter or scroll to continue.<br>use menu to jump to any page.<br>';
     }
   }
 
@@ -895,7 +895,7 @@ try { if (navigator.audioSession) navigator.audioSession.type = 'ambient'; } cat
 <span class="sep">·</span>
 <a href="https://www.linkedin.com/company/thrillwave" rel="noopener" target="_blank">linkedin</a>
 <span class="sep">·</span>
-<a href="#" rel="noopener" target="_blank">fb</a>
+<a href="https://www.facebook.com/thrillwaveco/" rel="noopener" target="_blank">fb</a>
 </div>
 </div>
 </main>
@@ -1336,7 +1336,7 @@ try { if (navigator.audioSession) navigator.audioSession.type = 'ambient'; } cat
     const label = PAGE_LABELS[page] || page.replace('.html','');
     if (titlePage) titlePage.textContent = label;
     if (framePage) framePage.innerHTML = label + ' &nbsp;·&nbsp; ' + (PAGE_NUMS[page] || '');
-    document.title = 'Thrill Wave | ' + (label === 'home' ? 'Phoenix Video Production Company' : label);
+    document.title = label === 'home' ? 'Thrill Wave | Phoenix Video Production Company' : ({ sitrep: 'SITREP' }[label] || (label.charAt(0).toUpperCase() + label.slice(1))) + ' | Thrill Wave';
     document.querySelectorAll('#side-menu a.menu-item').forEach(function(a){
       const p = normalizePage(a.getAttribute('href') || a.dataset.page || 'index.html');
       a.classList.toggle('current', p === page);
@@ -1443,9 +1443,10 @@ try { if (navigator.audioSession) navigator.audioSession.type = 'ambient'; } cat
       cascade.style.opacity = '1';
     }
     if (iframe && iframe.dataset.src) iframe.setAttribute('src', iframe.dataset.src);
-    if (post) post.innerHTML = `&gt; we are a video production company based in phoenix, az, that makes films for people, not audiences.
-&gt;
-&gt; press enter or scroll down to go to the next section, or click menu to jump to a page.
+    if (post) post.innerHTML = `we are a video production company based in phoenix, az, that makes films for people, not audiences.
+
+press enter or scroll to continue.
+use menu to jump to any page.
 `;
     body.classList.remove('home-intro-running');
     body.classList.add('home-intro-complete');
