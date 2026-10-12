@@ -16,7 +16,7 @@
 
   var HOME = 'https://thrillwave.com/';
   var IDLE_MS = window.__twIdleMs || 60000;
-  var BLUE = '#3d8bff';
+  var BLUE = '#192dfe'; // the main site's Keep scrolling pill blue (rgb 25, 45, 254)
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var store = { get: function (k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } },
                 set: function (k, v) { try { sessionStorage.setItem(k, v); } catch (e) {} } };
@@ -38,7 +38,7 @@
     'border-radius:4px;padding:9px 17px;height:29px;box-sizing:border-box;display:inline-flex;align-items:center;letter-spacing:1.6px;line-height:1;',
     'text-transform:lowercase;cursor:pointer;text-decoration:none;transition:color .18s ease,border-color .18s ease,text-shadow .18s ease}',
     '.tw-egg__btn:hover,.tw-egg__btn:focus-visible{color:var(--accent);border-color:var(--accent);outline:none}',
-    '.tw-egg__btn--blue:hover,.tw-egg__btn--blue:focus-visible{color:var(--tw-blue);border-color:var(--tw-blue);text-shadow:0 0 8px rgba(61,139,255,.55)}',
+    '.tw-egg__btn--blue:hover,.tw-egg__btn--blue:focus-visible{color:var(--tw-blue);border-color:var(--tw-blue);text-shadow:0 0 8px rgba(25,45,254,.7)}',
     // credits
     '.tw-egg--credits{display:block;overflow:hidden}',
     '.tw-egg__roll{width:min(520px,calc(100% - 48px));margin:0 auto;padding-top:100vh;will-change:transform}',
@@ -59,7 +59,7 @@
     '.tw-egg__end{position:static;margin:2.5em 0 10vh}}',
     // blue pill on the intro (left of skip), on the outer frame and in the menu
     '.controls .tw-controls-sep{color:var(--muted);font-size:9.5px;align-self:center;user-select:none}',
-    '.controls #bluepill-btn:hover,.controls #bluepill-btn:focus-visible{color:var(--tw-blue);text-shadow:0 0 8px rgba(61,139,255,.55);outline:none}',
+    '.controls #bluepill-btn:hover,.controls #bluepill-btn:focus-visible{color:var(--tw-blue);text-shadow:0 0 8px rgba(25,45,254,.7);outline:none}',
     '.frame-label--tr{top:var(--tw-frame-label-y,-7px)!important;right:var(--tw-frame-label-x,22px)!important;left:auto!important;bottom:auto!important;cursor:pointer;pointer-events:auto!important}',
     'a.frame-label--tr:hover,a.frame-label--tr:focus-visible,.bluepill-modal-open .frame-label--tr{color:var(--tw-blue)!important;outline:none}',
     '#side-menu .menu-item--bluepill:hover .name,#side-menu .menu-item--bluepill:focus-visible .name,#side-menu .menu-item--bluepill:hover .num,#side-menu .menu-item--bluepill:focus-visible .num{color:var(--tw-blue)!important}',
