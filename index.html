@@ -2807,9 +2807,10 @@ document.getElementById('skip-btn').addEventListener('click', skipSequence);
   ];
 
   const introPostLines = [
-    { t: "we are a video production company based in phoenix, az. we make films for people, not audiences.", p: 500 },
+    // stop: true adds a beat after each full stop in that line ("az.", "audiences.", "continue."; Oct 12, 2026, Ari)
+    { t: "we are a video production company based in phoenix, az. we make films for people, not audiences.", p: 500, stop: true },
     { t: '', p: 280 },
-    { t: 'press enter or scroll to continue.', p: 120 },
+    { t: 'press enter or scroll to continue.', p: 120, stop: true },
     { t: 'use menu to jump to any page.', p: 0 },
   ];
 
@@ -2855,7 +2856,8 @@ document.getElementById('skip-btn').addEventListener('click', skipSequence);
           }
           j++;
           // Slightly faster homepage typing.
-          const d = c === ' ' ? 14 : 28 + Math.random() * 16;
+          let d = c === ' ' ? 14 : 28 + Math.random() * 16;
+          if (line.stop && c === '.') d += 400;
           setTimeout(ch, d);
         } else {
           if (line.glyph) html += '<span class="tw-logo-glyph tw-logo-glyph--inline" aria-hidden="true"></span>';
