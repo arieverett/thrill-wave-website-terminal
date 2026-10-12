@@ -3,7 +3,7 @@
       to follow the white rabbit into the secret break room (once per visit; never over a playing film or game).
    2. credits : type "credits" or the Konami code (up up down down left right left right b a), or tap the clock
       in the corner 5 times on a phone. The site rolls its own end credits and ends on "a thrill wave film".
-   3. bluepill : type "bluepill" (or pick it at the end of the credits). "you chose comfort. that's ok."
+   3. bluepill : type "bluepill" (or pick it at the end of the credits). "you chose comfort. goodbye."
       then back to thrillwave.com. */
 (function twEasterEggs() {
   'use strict';
@@ -22,6 +22,8 @@
     '.tw-egg{position:fixed;inset:0;z-index:2147483000;background:#000;color:var(--accent,#00ff41);font-family:var(--font,ui-monospace,Menlo,monospace);',
     'font-size:clamp(14px,2.2vw,18px);line-height:1.7;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;transition:opacity .6s ease}',
     '.tw-egg.is-on{opacity:1}',
+    '.tw-egg .welcome-line{font-size:14px!important;line-height:1.58!important;white-space:pre!important}',
+    '@media (max-width:720px){.tw-egg .welcome-line{font-size:13px!important}}',
     '.tw-egg__box{width:min(640px,100%)}',
     '.tw-egg__line{white-space:pre-wrap;min-height:1.7em}',
     '.tw-egg__cursor{display:inline-block;width:.6em;height:1.1em;margin-left:2px;vertical-align:-.15em;background:currentColor;animation:twEggBlink 1s steps(1) infinite}',
@@ -194,11 +196,13 @@
     var inner = document.createElement('div'); inner.className = 'welcome-inner'; el.appendChild(inner);
     var text = document.createElement('div'); text.className = 'welcome-text'; inner.appendChild(text);
     var cursor = document.createElement('span'); cursor.className = 'welcome-cursor';
-    function line() {
+    // Both lines exist from the start (the second one empty), so the block never shifts or resizes as it types
+    var lines = [0, 1].map(function () {
       var l = document.createElement('div'); l.className = 'welcome-line';
       var t = document.createElement('span'); t.className = 'line-text'; l.appendChild(t);
-      text.appendChild(l); l.appendChild(cursor); return t;
-    }
+      text.appendChild(l); return t;
+    });
+    function line(i) { lines[i].parentNode.appendChild(cursor); return lines[i]; }
     function type(target, str, speed) {
       if (reduce) { target.textContent = str; return Promise.resolve(); }
       var i = 0;
@@ -212,9 +216,9 @@
     }
     (async function () {
       await wait(600);
-      await type(line(), '> you chose comfort.', 42);
+      await type(line(0), '> you chose comfort.', 42);
       await wait(650);
-      await type(line(), '> that\u2019s ok.', 42);
+      await type(line(1), '> goodbye.', 42);
       await wait(1600);
       if (el.isConnected) window.location.href = HOME;
     })();
