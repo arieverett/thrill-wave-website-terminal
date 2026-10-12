@@ -1819,6 +1819,10 @@ function primeMusicForIOS() {
 // each line can be: [type, content, delayAfter (ms)]
 // types: 'instant' | 'progress' | 'plain'
 // progress lines animate dots then snap to [ OK ]
+// Live stamp for the "last sitrep" line: the visitor's own clock and a fresh session id on every visit
+const bootNow = new Date();
+const bootStamp = [bootNow.getHours(), bootNow.getMinutes(), bootNow.getSeconds()].map((n) => String(n).padStart(2, '0')).join(':');
+const bootSession = '0x' + Math.floor(Math.random() * 0xffff).toString(16).padStart(4, '0');
 const bootLines = [
   { type: 'plain',    text: 'thrill_wave bios <span class="dim">v3.2.402 · build 459 · 2026.10.12</span>', delay: 80 },
   { type: 'plain',    text: '<span class="dim">copyright (c) thrill wave studios. all rights reserved.</span>', delay: 280 },
@@ -1839,7 +1843,8 @@ const bootLines = [
   { type: 'progress', text: 'bootstrapping observation engine', delay: 30 },
   { type: 'plain',    text: '&nbsp;', delay: 100 },
   { type: 'plain',    text: '<span class="dim">[info] 220 films indexed in the archive</span>', delay: 110 },
-  { type: 'plain',    text: '<span class="dim">[info] last sitrep: 14:32:08 utc · session 0x7af3</span>', delay: 220 },
+  { type: 'plain',    text: `<span class="dim">[info] last sitrep: ${bootStamp} local · session ${bootSession}</span>`, delay: 110 },
+  { type: 'plain',    text: '<span class="dim">[info] lineage: wordpress → wix → v3.0 scratch → v3.1 terminal → v3.2 red pill</span>', delay: 220 },
   { type: 'plain',    text: '&nbsp;', delay: 80 },
   { type: 'plain',    text: '<span class="acc">all systems nominal.</span>', delay: 280 },
   { type: 'plain',    text: 'launching shell<span class="cursor-block"></span>', delay: 120 }
