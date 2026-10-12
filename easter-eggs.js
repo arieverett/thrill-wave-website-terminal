@@ -463,8 +463,23 @@
     var panel = document.querySelector('[data-breakroom-score-panel].is-open');
     var btn = panel && panel.querySelector('[data-score-close]');
     if (!btn && body.classList.contains('tw-breakroom-game-active')) btn = document.querySelector('[data-breakroom-back]');
-    if (!btn) btn = document.querySelector('[data-breakroom-exit]');
-    if (btn) btn.click();
+    if (btn) { btn.click(); return true; }
+    // Leaving the room: if its opening lines are still typing, finish them first (all lines and tiles in place)
+    // so the room is whole next time, then leave the way the title-bar dot does, which also stops the typing
+    // timers. (The exit link alone left those timers running, and the room came back half typed.)
+    var r = document.getElementById('tw-breakroom') || document.querySelector('.tw-breakroom');
+    if (r && r.dataset.typed !== '1') {
+      Array.prototype.forEach.call(r.querySelectorAll('[data-breakroom-line]'), function (l) {
+        l.textContent = l.getAttribute('data-breakroom-line') || '';
+        l.classList.remove('is-typing', 'cursor-live');
+      });
+      var ex = r.querySelector('.tw-breakroom-exit[data-breakroom-line]');
+      if (ex) ex.classList.add('cursor-live');
+      r.classList.add('tw-breakroom-typed', 'tw-breakroom-text-done', 'tw-breakroom-cards-ready', 'tw-breakroom-exit-ready');
+      r.dataset.typed = '1';
+    }
+    if (typeof window.twSetBreakRoom === 'function') window.twSetBreakRoom(false);
+    else { var x = document.querySelector('[data-breakroom-exit]'); if (x) x.click(); }
     return true;
   }
   // While a game is being played, the keyboard belongs to the game's own frame, so esc never reaches this page.
