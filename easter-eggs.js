@@ -59,7 +59,11 @@
     '.tw-egg__end{position:static;margin:2.5em 0 10vh}}',
     // blue pill on the intro (left of skip), on the outer frame and in the menu
     '.controls .tw-controls-sep{color:var(--muted);font-size:9.5px;align-self:center;user-select:none}',
-    '.controls #bluepill-btn:hover,.controls #bluepill-btn:focus-visible{color:var(--tw-blue);text-shadow:0 0 8px rgba(25,45,254,.7);outline:none}',
+    // each button owns its own hover colour, so neither can inherit the other's (blue pill blue, skip green)
+    '.controls #bluepill-btn,.controls #skip-btn{transition:color .15s ease,text-shadow .15s ease!important;text-shadow:none}',
+    '.controls #bluepill-btn:hover,.controls #bluepill-btn:focus-visible{color:var(--tw-blue)!important;text-shadow:0 0 8px rgba(25,45,254,.7)!important;outline:none}',
+    '.controls #skip-btn:hover,.controls #skip-btn:focus-visible{color:var(--accent)!important;text-shadow:none!important;outline:none}',
+    '.controls #bluepill-btn:not(:hover):not(:focus-visible),.controls #skip-btn:not(:hover):not(:focus-visible){color:var(--muted)!important}',
     '.frame-label--tr{top:var(--tw-frame-label-y,-7px)!important;right:var(--tw-frame-label-x,22px)!important;left:auto!important;bottom:auto!important;cursor:pointer;pointer-events:auto!important}',
     'a.frame-label--tr:hover,a.frame-label--tr:focus-visible,.bluepill-modal-open .frame-label--tr{color:var(--tw-blue)!important;outline:none}',
     '#side-menu .menu-item--bluepill:hover .name,#side-menu .menu-item--bluepill:focus-visible .name,#side-menu .menu-item--bluepill:hover .num,#side-menu .menu-item--bluepill:focus-visible .num{color:var(--tw-blue)!important}',
@@ -397,7 +401,7 @@
     var list = document.querySelector('#side-menu .menu-list');
     if (list && !list.querySelector('.menu-item--bluepill')) {
       var item = document.createElement('button');
-      item.type = 'button'; item.className = 'menu-item menu-item--bluepill';
+      item.type = 'button'; item.className = 'menu-item tw-page-link menu-item--bluepill';
       item.setAttribute('data-page', 'bluepill'); item.setAttribute('data-bluepill', '');
       item.innerHTML = '<span class="num">[07]</span><span class="name">blue pill</span>';
       list.appendChild(item);
