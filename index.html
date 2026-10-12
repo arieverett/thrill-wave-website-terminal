@@ -2854,8 +2854,11 @@ document.getElementById('skip-btn').addEventListener('click', skipSequence);
             window.twTypeClick();
           }
           j++;
-          // Slightly faster homepage typing.
-          const d = c === ' ' ? 14 : 28 + Math.random() * 16;
+          // Slightly faster homepage typing, with a beat after each full stop (Oct 12, 2026, Ari).
+          // Line breaks keep their own pause (p on each line above).
+          let d = c === ' ' ? 14 : 28 + Math.random() * 16;
+          const after = line.t[j];
+          if (c === '.' && (after === ' ' || after === undefined)) d += 380;
           setTimeout(ch, d);
         } else {
           if (line.glyph) html += '<span class="tw-logo-glyph tw-logo-glyph--inline" aria-hidden="true"></span>';
