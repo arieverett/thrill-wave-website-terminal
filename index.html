@@ -2377,10 +2377,20 @@ let started = false;
 function startOnce() {
   if (started) return;
   started = true;
-  startEverything();
+  // The press: a solid green flash on the button, then the welcome text dims out (styles: TW click-to-start press)
+  welcomeBtn.classList.remove('is-down');
+  welcomeBtn.classList.add('is-fired');
+  welcomeGate.classList.add('is-firing');
+  // Unlock sound inside the tap itself, then give the flash ~0.17s to land before the gate fades into the boot
+  twUnlockAudioInGesture();
+  primeMusicForIOS();
+  setTimeout(startEverything, 170);
 }
 
 welcomeBtn.addEventListener('click', startOnce);
+// Sink the button the moment a finger or mouse goes down (phones don't reliably show :active)
+welcomeBtn.addEventListener('pointerdown', () => { if (!started) welcomeBtn.classList.add('is-down'); });
+['pointerup', 'pointercancel', 'pointerleave'].forEach((t) => welcomeBtn.addEventListener(t, () => welcomeBtn.classList.remove('is-down')));
 
 // keyboard — Enter/Space start the gate; once started they skip
 let bootEnded = false;
@@ -2950,7 +2960,7 @@ document.getElementById('skip-btn').addEventListener('click', skipSequence);
               setTimeout(() => {
                 if ((window.twTypingGen || 0) !== myGen) return;
                 document.body.classList.add('home-intro-complete');
-              }, 2450);
+              }, 2400);
             });
           }, 700);
         });
